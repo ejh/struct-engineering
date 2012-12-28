@@ -8,39 +8,41 @@
   * @return int Returns the number of elements.
   */
   
-  abstract class Materials{
+  class Material{
     
     // Determines when class is ready for use, i.e. it is fully populated.
-    private $ready = false;
+    protected $ready = false;
     
     // Display name of this material
-    private $name = "";
+    protected $name = "";
     
     // Young's modulus of this material
-    private $E = 0;
+    protected $E = 0;
     
     // Shear modulus of this material
-    private $G = 0;
+    protected $G = 0;
     
     // Density
     // [weight/length^3]
-    private $density = 0;
-    
-    // Yield stress
-    // 0 for brittle (non-ductile) material
-    private $sigY = 0;
+    protected $density = 0;
     
     //Ultimate tensile strength
-    private $sigUlt = 0;
+    protected $sigUlt = 0;
     
     // Stress-strain relationship
     // array of {stress,strain} arrays/objects
-    private $stressStrain = array();
+    protected $stressStrain = array();
     
+    // Coefficient of thermal expansion
+    protected $coefThermExpan = 0;
     
+    // Poisson ratio
+    protected $poissonRatio = 0;
     
+    // allowed properties
+    // these are the properties which can be set.
+    protected $allowedProperties = array("name","E","G","density","sigUlt","stressStrain","coefThermExpan","poissonRatio");
     
-      
       
     /**
       * Constructor
@@ -59,10 +61,29 @@
       
       }
       
+    }  
       
-    
-    
-    
+    /**
+      * Check if this material is ready to be used. 
+      * Should be internally checked prior to returning anything else.
+      * 
+      * @returns boolean Checks if this material is ready to be used.
+      * 
+      */
+    public function isReady() {
+        
+      if($this->ready === true){
+        return true;
+      }
+      else{
+        return false;
+      }
+        
     }
+    
+   
       
   }
+  
+    
+?>
